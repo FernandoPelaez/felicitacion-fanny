@@ -38,18 +38,18 @@ const itemVariants: Variants = {
 const wishes = [
   {
     icon: "🌷",
-    title: "Un detalle sincero",
-    text: "Hecho con calma, cariño y pensando en ti.",
+    title: "Un inicio bonito",
+    text: "Para que este día empiece con una sonrisa tuya.",
   },
   {
     icon: "💗",
-    title: "Un momento para guardar",
-    text: "De esos pequeños que se vuelven especiales.",
+    title: "Algo muy tuyo",
+    text: "Un detalle sencillo, pero pensado con el corazón.",
   },
   {
     icon: "🎀",
-    title: "Una forma de decirlo",
-    text: "Porque a veces el cariño también se construye así.",
+    title: "Una pequeña sorpresa",
+    text: "Porque quería regalarte algo diferente esta vez.",
   },
 ];
 
@@ -82,27 +82,26 @@ export default function BirthdayLetterPanel() {
 
         <div className="min-w-0 space-y-2 text-[11px] leading-5 text-slate-600 sm:text-[12px] sm:leading-6">
           <p>
-            Fanny, hoy quise hacer algo diferente. No algo perfecto ni enorme,
-            sino algo sincero, bonito y hecho con mucho cariño, porque hay
-            personas que merecen detalles que nazcan de verdad.
+            Buenos días, mi nenita hermosa. Hoy quería que despertaras con algo
+            distinto, algo que no fuera solo un mensaje rápido, sino un detalle
+            hecho con calma y con muchas ganas de sacarte una sonrisa.
           </p>
 
           <p>
-            Mientras hacía esto pensé en tu sonrisa, en tu forma de ser y en lo
-            especial que eres. Quise juntar palabras, momentos y pequeños
-            detalles en un solo lugar, como una manera sencilla de recordarte lo
-            mucho que significas para mí.
+            Mientras preparaba esto, me puse a pensar en todo lo bonito que hay
+            en ti: tu forma de ser, tu manera de hacer especiales los momentos
+            simples y esa luz tuya que se nota sin que tengas que intentarlo.
           </p>
 
           <p>
-            No quería que fuera solo una felicitación más, sino un espacio hecho
-            para ti, con calma, con intención y con ese toque bonito que mereces
-            recibir en un día como este.
+            Por eso quise guardar aquí una parte de lo que siento, no con algo
+            exagerado, sino con palabras, música y recuerdos que hablaran por mí
+            poquito a poquito.
           </p>
 
           <p className="font-bold text-gray-800">
-            Ojalá este detalle te abrace un poquito el corazón y te recuerde que
-            eres una persona muy especial en mi vida. 🎀
+            Ojalá al ver esto sientas lo importante que eres para mí y lo mucho
+            que me alegra poder hacerte este detalle en tu día. 🎀
           </p>
         </div>
       </motion.div>

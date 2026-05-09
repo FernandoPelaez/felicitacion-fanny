@@ -18,7 +18,7 @@ type BirthdayDashboardTab =
 
 type DashboardOption = {
   id: BirthdayDashboardTab;
-  icon: string;
+  icon: string; 
   label: string;
   description: string;
 };
@@ -34,7 +34,7 @@ const options: DashboardOption[] = [
     id: "carta",
     icon: "💌",
     label: "Carta",
-    description: "Palabras desde el corazón",
+    description: "",
   },
   {
     id: "recuerdos",
@@ -211,9 +211,11 @@ export default function BirthdayDashboard() {
                       {option.label}
                     </span>
 
-                    <span className="block truncate text-[9px] font-semibold text-gray-400">
-                      {option.description}
-                    </span>
+                    {option.description ? (
+                      <span className="block truncate text-[9px] font-semibold text-gray-400">
+                        {option.description}
+                      </span>
+                    ) : null}
                   </span>
                 </motion.button>
               );
@@ -230,9 +232,6 @@ export default function BirthdayDashboard() {
             <div className="min-w-0">
               <p className="truncate text-[8px] font-black uppercase tracking-[0.2em] text-rose-400">
                 {activeOption?.label}
-              </p>
-              <p className="truncate text-[9px] font-semibold text-gray-400">
-                {activeOption?.description}
               </p>
             </div>
           </div>

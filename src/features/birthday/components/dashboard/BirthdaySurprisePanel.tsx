@@ -419,8 +419,9 @@ export default function BirthdaySurprisePanel() {
                   transition={{ delay: 0.3, duration: 0.38 }}
                   className="text-[11px] leading-5 text-slate-500 sm:text-[12px]"
                 >
-                  Llegamos a la parte del pastel, pero más que el pastel, lo
-                  bonito es este momento hecho para ti.
+                  Antes de apagar las velitas, quédate un momentito aquí y pide
+                  un deseo de esos que se sienten en el corazón, aunque nadie
+                  más lo escuche.
                 </motion.p>
 
                 <motion.p
@@ -429,9 +430,8 @@ export default function BirthdaySurprisePanel() {
                   transition={{ delay: 0.42, duration: 0.38 }}
                   className="mt-2 text-[11px] leading-5 text-slate-500 sm:text-[12px]"
                 >
-                  Antes de apagar las velitas, piensa en algo que te emocione de
-                  verdad. Algo tuyo, algo bonito, algo que quieras guardar con
-                  ilusión.
+                  Que sea algo que te ilusione, algo que te dé paz o algo que te
+                  haga sonreír cada vez que lo imagines.
                 </motion.p>
 
                 <motion.p
