@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  
+  --background: #fff0f6;
+  --background-soft: #ffcce0;
+  --background-light: #fff7fb;
+
+  --foreground: #3b0a18;
+  --foreground-muted: #7f1d3a;
+
+  --primary: #e8457c;
+  --primary-soft: #ff8cb5;
+  --primary-dark: #b5205a;
+  --primary-hover: #c72f68;
+
+  --card: #ffffff;
+  --card-soft: #fff8fb;
+
+  --border: #f7b8d2;
+  --border-soft: #ffd8e8;
+
+  --gold: #fff8a1;
+  --gold-dark: #9a7b00;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-soft: var(--background-soft);
+  --color-background-light: var(--background-light);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-hover: var(--primary-hover);
+
+  --color-card: var(--card);
+  --color-card-soft: var(--card-soft);
+
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+
+  --color-gold: var(--gold);
+  --color-gold-dark: var(--gold-dark);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--primary-soft);
+  color: #ffffff;
+}
