@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 
-type MemoryPhoto = { src: string; alt: string };
+type MemoryPhoto = {
+  src: string;
+  alt: string;
+};
 
 const photos: MemoryPhoto[] = Array.from({ length: 14 }, (_, index) => ({
   src: `/fanny/img${index + 1}.jpeg`,
@@ -46,26 +49,32 @@ export default function BirthdayMemoriesPanel() {
   const activePhoto = photos[activeIndex];
 
   const nextPhoto = () => {
-    setActiveIndex((i) => (i === totalPhotos - 1 ? 0 : i + 1));
+    setActiveIndex((currentIndex) =>
+      currentIndex === totalPhotos - 1 ? 0 : currentIndex + 1,
+    );
   };
 
   const previousPhoto = () => {
-    setActiveIndex((i) => (i === 0 ? totalPhotos - 1 : i - 1));
+    setActiveIndex((currentIndex) =>
+      currentIndex === 0 ? totalPhotos - 1 : currentIndex - 1,
+    );
   };
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActiveIndex((i) => (i === totalPhotos - 1 ? 0 : i + 1));
+      setActiveIndex((currentIndex) =>
+        currentIndex === totalPhotos - 1 ? 0 : currentIndex + 1,
+      );
     }, 4500);
 
     return () => window.clearInterval(interval);
   }, [totalPhotos]);
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-pink-100/70 bg-white/90 p-2.5 shadow-md shadow-pink-100/20">
-      <div className="grid gap-2.5 lg:grid-cols-[1fr_180px]">
-        <div className="relative overflow-hidden rounded-xl border border-pink-100/60 bg-pink-50/50 p-1">
-          <div className="relative h-[200px] overflow-hidden rounded-lg bg-pink-100/40 sm:h-[240px] lg:h-[260px]">
+    <div className="relative min-w-0 w-full max-w-full overflow-hidden rounded-xl border border-pink-100/70 bg-white/90 p-2.5 shadow-md shadow-pink-100/20">
+      <div className="grid min-w-0 w-full max-w-full gap-2.5 overflow-hidden lg:grid-cols-[minmax(0,1fr)_180px]">
+        <div className="relative min-w-0 w-full max-w-full overflow-hidden rounded-xl border border-pink-100/60 bg-pink-50/50 p-1">
+          <div className="relative h-[340px] w-full max-w-full overflow-hidden rounded-lg bg-pink-100/40 sm:h-[420px] lg:h-[360px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activePhoto.src}
@@ -73,15 +82,17 @@ export default function BirthdayMemoriesPanel() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="absolute inset-0"
+                className="absolute inset-0 overflow-hidden"
               >
                 <img
                   src={activePhoto.src}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl"
+                  className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-35 blur-xl"
                   draggable={false}
                 />
+
+                <div className="absolute inset-0 bg-white/20" />
 
                 <img
                   src={activePhoto.src}
@@ -105,7 +116,7 @@ export default function BirthdayMemoriesPanel() {
                 <button
                   type="button"
                   onClick={previousPhoto}
-                  className="flex h-7 w-7 items-center justify-center rounded-full border border-white/40 bg-white/85 text-sm font-black text-rose-500 backdrop-blur-md transition hover:bg-white active:scale-95"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/90 text-base font-black text-rose-500 shadow-sm backdrop-blur-md transition hover:bg-white active:scale-95"
                   aria-label="Foto anterior"
                 >
                   ‹
@@ -114,7 +125,7 @@ export default function BirthdayMemoriesPanel() {
                 <button
                   type="button"
                   onClick={nextPhoto}
-                  className="flex h-7 w-7 items-center justify-center rounded-full border border-white/40 bg-white/85 text-sm font-black text-rose-500 backdrop-blur-md transition hover:bg-white active:scale-95"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/90 text-base font-black text-rose-500 shadow-sm backdrop-blur-md transition hover:bg-white active:scale-95"
                   aria-label="Foto siguiente"
                 >
                   ›
@@ -124,12 +135,12 @@ export default function BirthdayMemoriesPanel() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-pink-100/60 bg-white/70 p-2">
+        <div className="min-w-0 w-full max-w-full overflow-hidden rounded-xl border border-pink-100/60 bg-white/70 p-2">
           <p className="mb-1.5 text-[8px] font-black uppercase tracking-widest text-rose-400">
             Galería · {totalPhotos} fotos
           </p>
 
-          <div className="flex gap-1.5 overflow-x-auto pb-1 lg:grid lg:max-h-[260px] lg:grid-cols-2 lg:gap-1.5 lg:overflow-y-auto lg:overflow-x-hidden">
+          <div className="flex max-w-full gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] lg:grid lg:max-h-[360px] lg:grid-cols-2 lg:gap-1.5 lg:overflow-y-auto lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden">
             {photos.map((photo, index) => {
               const isActive = activeIndex === index;
 
@@ -139,9 +150,9 @@ export default function BirthdayMemoriesPanel() {
                   type="button"
                   onClick={() => setActiveIndex(index)}
                   className={[
-                    "relative h-12 w-14 shrink-0 overflow-hidden rounded-lg border bg-pink-50 transition-all duration-200 lg:h-[58px] lg:w-auto",
+                    "relative h-16 w-14 shrink-0 overflow-hidden rounded-lg border bg-pink-50 transition-all duration-200 sm:h-20 sm:w-16 lg:h-[76px] lg:w-auto",
                     isActive
-                      ? "border-rose-300 shadow-sm shadow-pink-100"
+                      ? "border-rose-300 opacity-100 shadow-sm shadow-pink-100"
                       : "border-pink-100 opacity-70 hover:opacity-100",
                   ].join(" ")}
                   aria-label={`Ver foto ${index + 1}`}

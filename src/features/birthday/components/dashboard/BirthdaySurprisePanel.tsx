@@ -32,27 +32,27 @@ const heartVariants: Variants = {
 const finalCards = [
   {
     icon: "💗",
-    title: "Era broma",
-    text: "Sí había sorpresa, solo quería hacerla tantito más emocionante.",
+    title: "Un momento especial",
+    text: "Hecho para que esta parte se sintiera diferente y bonita.",
   },
   {
     icon: "🎁",
-    title: "Cierra los ojos",
-    text: "Respira bonito y abre este detalle con calma.",
+    title: "Una pausa para ti",
+    text: "Solo respira, mira el detalle y quédate con lo lindo del momento.",
   },
   {
     icon: "✨",
-    title: "Es para ti",
-    text: "Porque hoy mereces algo hecho con cariño y pensado solo para ti.",
+    title: "Con cariño",
+    text: "Porque esto no salió rápido, salió pensado para ti.",
   },
 ];
 
 function AnimatedCake() {
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative flex w-full max-w-[210px] items-center justify-center sm:max-w-[240px]">
       <svg
         viewBox="0 0 200 220"
-        className="w-48 sm:w-56 drop-shadow-xl"
+        className="h-auto w-full drop-shadow-xl"
         xmlns="http://www.w3.org/2000/svg"
       >
         <ellipse cx="100" cy="198" rx="72" ry="10" fill="#f9a8d4" opacity="0.4" />
@@ -316,7 +316,7 @@ export default function BirthdaySurprisePanel() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-pink-100/70 bg-white/90 p-3 shadow-md shadow-pink-100/20">
+    <div className="relative min-w-0 w-full max-w-full overflow-hidden rounded-xl border border-pink-100/70 bg-white/90 p-2.5 shadow-md shadow-pink-100/20 sm:p-3">
       <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-pink-200/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-16 -left-14 h-36 w-36 rounded-full bg-rose-200/20 blur-3xl" />
 
@@ -328,7 +328,7 @@ export default function BirthdaySurprisePanel() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="relative flex min-h-[200px] flex-col items-center justify-center rounded-2xl border border-pink-100/80 bg-gradient-to-br from-white via-pink-50/40 to-white p-5 text-center"
+            className="relative flex min-h-[190px] w-full max-w-full flex-col items-center justify-center rounded-2xl border border-pink-100/80 bg-gradient-to-br from-white via-pink-50/40 to-white p-4 text-center sm:min-h-[200px] sm:p-5"
           >
             <motion.div
               variants={heartVariants}
@@ -347,7 +347,8 @@ export default function BirthdaySurprisePanel() {
             </h2>
 
             <p className="mt-2 max-w-sm text-[12px] leading-5 text-slate-500">
-              No hay sorpresa. Solo quería hacerte esperar unos segundos para darle más drama al asunto.
+              No hay sorpresa. Solo quería hacerte esperar unos segundos para
+              darle más drama al asunto.
             </p>
 
             <p className="mt-3 text-[10px] font-bold text-rose-400">
@@ -363,7 +364,7 @@ export default function BirthdaySurprisePanel() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="relative flex min-h-[200px] flex-col items-center justify-center rounded-2xl border border-pink-100/80 bg-gradient-to-br from-white via-rose-50/50 to-white p-5 text-center"
+            className="relative flex min-h-[190px] w-full max-w-full flex-col items-center justify-center rounded-2xl border border-pink-100/80 bg-gradient-to-br from-white via-rose-50/50 to-white p-4 text-center sm:min-h-[200px] sm:p-5"
           >
             <motion.div
               variants={heartVariants}
@@ -382,7 +383,8 @@ export default function BirthdaySurprisePanel() {
             </h2>
 
             <p className="mt-2 max-w-sm text-[12px] leading-5 text-slate-500">
-              Cierra los ojos un momento. No hagas trampa, porque esta parte está hecha para que se sienta más bonita.
+              Cierra los ojos un momento. No hagas trampa, porque esta parte
+              está hecha para que se sienta más bonita.
             </p>
 
             <p className="mt-3 text-[10px] font-bold text-rose-400">
@@ -398,26 +400,27 @@ export default function BirthdaySurprisePanel() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="relative rounded-2xl border border-pink-100/80 bg-gradient-to-br from-white via-pink-50/30 to-white p-4"
+            className="relative min-w-0 w-full max-w-full overflow-hidden rounded-2xl border border-pink-100/80 bg-gradient-to-br from-white via-pink-50/30 to-white p-3 sm:p-4"
           >
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
+            <div className="flex min-w-0 w-full max-w-full flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-5">
               <motion.div
                 initial={{ opacity: 0, scale: 0.7, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="shrink-0"
+                className="flex w-full shrink-0 justify-center sm:w-auto"
               >
                 <AnimatedCake />
               </motion.div>
 
-              <div className="min-w-0 text-center sm:text-left">
+              <div className="min-w-0 w-full text-center sm:text-left">
                 <motion.p
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.38 }}
                   className="text-[11px] leading-5 text-slate-500 sm:text-[12px]"
                 >
-                  Antes de apagar las velitas, pide un deseo bonito. Uno de esos que salen del corazón y se guardan con ilusión.
+                  Llegamos a la parte del pastel, pero más que el pastel, lo
+                  bonito es este momento hecho para ti.
                 </motion.p>
 
                 <motion.p
@@ -426,16 +429,18 @@ export default function BirthdaySurprisePanel() {
                   transition={{ delay: 0.42, duration: 0.38 }}
                   className="mt-2 text-[11px] leading-5 text-slate-500 sm:text-[12px]"
                 >
-                  Que este nuevo año te regale sonrisas, tranquilidad, amor y momentos que te hagan sentir muy especial.
+                  Antes de apagar las velitas, piensa en algo que te emocione de
+                  verdad. Algo tuyo, algo bonito, algo que quieras guardar con
+                  ilusión.
                 </motion.p>
 
                 <motion.p
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.54, duration: 0.38 }}
-                  className="mt-3 text-[12px] font-black text-gray-800"
+                  className="mt-3 text-[12px] font-black leading-5 text-gray-800"
                 >
-                  Hoy solo disfruta, sonríe y recuerda lo mucho que vales. 💗
+                  Que este detalle se quede contigo como un recuerdo lindo. 💗
                 </motion.p>
               </div>
             </div>
@@ -444,19 +449,19 @@ export default function BirthdaySurprisePanel() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.75, duration: 0.4 }}
-              className="mt-4 grid gap-2 sm:grid-cols-3"
+              className="mt-4 grid min-w-0 w-full max-w-full gap-2 sm:grid-cols-3"
             >
               {finalCards.map((card) => (
                 <motion.div
                   key={card.title}
                   whileHover={{ y: -2, scale: 1.01 }}
-                  className="rounded-xl border border-pink-100/80 bg-white/85 p-3 shadow-sm"
+                  className="min-w-0 rounded-xl border border-pink-100/80 bg-white/85 p-3 shadow-sm"
                 >
                   <div className="mb-1.5 text-base">{card.icon}</div>
-                  <h3 className="text-[10px] font-black text-gray-800">
+                  <h3 className="break-words text-[10px] font-black text-gray-800">
                     {card.title}
                   </h3>
-                  <p className="mt-1 text-[9px] leading-4 text-slate-500">
+                  <p className="mt-1 break-words text-[9px] leading-4 text-slate-500">
                     {card.text}
                   </p>
                 </motion.div>

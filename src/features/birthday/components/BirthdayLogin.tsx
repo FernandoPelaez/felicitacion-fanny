@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { birthdayLoginData } from "@/features/birthday/data/birthday.data";
@@ -28,13 +28,29 @@ const confettiPieces = [
 
 export default function BirthdayLogin() {
   const router = useRouter();
+  const birthdayInputRef = useRef<HTMLInputElement>(null);
 
   const [birthday, setBirthday] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isEntering, setIsEntering] = useState(false);
 
   const { access, content, errors } = birthdayLoginData;
+
+  const openBirthdayPicker = () => {
+    const input = birthdayInputRef.current;
+
+    if (!input) return;
+
+    input.focus();
+
+    const pickerInput = input as HTMLInputElement & {
+      showPicker?: () => void;
+    };
+
+    pickerInput.showPicker?.();
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,12 +82,12 @@ export default function BirthdayLogin() {
   };
 
   return (
-    <div className="relative flex h-full w-full items-center justify-center overflow-hidden px-3">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-primary-soft/30 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-56 w-56 rounded-full bg-gold/35 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-52 w-52 rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-soft/15 blur-2xl" />
+    <div className="relative flex min-h-screen w-full items-center justify-center overflow-x-hidden px-4 py-6 sm:px-5 sm:py-8">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-primary-soft/30 blur-3xl sm:h-72 sm:w-72" />
+        <div className="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-gold/35 blur-3xl sm:h-56 sm:w-56" />
+        <div className="absolute bottom-0 left-0 h-44 w-44 rounded-full bg-primary/20 blur-3xl sm:h-52 sm:w-52" />
+        <div className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-soft/15 blur-2xl sm:h-40 sm:w-40" />
 
         {confettiPieces.map((piece) => (
           <motion.span
@@ -107,7 +123,7 @@ export default function BirthdayLogin() {
         variants={loginCardVariants}
         initial="hidden"
         animate={isEntering ? "exit" : "visible"}
-        className="relative w-full max-w-[400px] overflow-hidden rounded-[2rem] border border-white/80 bg-white/80 p-5 shadow-2xl shadow-primary/25 backdrop-blur-2xl sm:p-7 md:max-w-[440px]"
+        className="relative w-full max-w-[350px] overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/85 p-5 shadow-2xl shadow-primary/25 backdrop-blur-2xl sm:max-w-[420px] sm:rounded-[2rem] sm:p-7 md:max-w-[440px]"
       >
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-soft via-primary to-gold" />
         <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-primary-soft/50 to-transparent" />
@@ -116,28 +132,28 @@ export default function BirthdayLogin() {
           variants={ribbonVariants}
           initial="hidden"
           animate={["visible", "pulse"]}
-          className="relative mx-auto mb-3 flex h-16 w-16 items-center justify-center sm:h-18 sm:w-18"
+          className="relative mx-auto mb-3 flex h-14 w-14 items-center justify-center sm:h-16 sm:w-16"
         >
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary-soft/40 to-primary/30 blur-md" />
-          <div className="relative flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-primary-soft via-primary to-primary-dark text-3xl shadow-xl shadow-primary/35">
+          <div className="relative flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-primary-soft via-primary to-primary-dark text-2xl shadow-xl shadow-primary/35 sm:text-3xl">
             🎀
           </div>
         </motion.div>
 
         <motion.div variants={loginItemVariants} className="text-center">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary-soft/60 bg-gradient-to-r from-primary-soft/20 to-primary/10 px-4 py-1.5">
+          <div className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-primary-soft/60 bg-gradient-to-r from-primary-soft/20 to-primary/10 px-3 py-1.5 sm:px-4">
             <span className="text-[9px]">✦</span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary-dark sm:text-[11px]">
+            <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-primary-dark sm:text-[11px]">
               {content.badge}
             </span>
             <span className="text-[9px]">✦</span>
           </div>
 
-          <h1 className="mt-3 text-balance text-[1.65rem] font-black tracking-tight text-foreground sm:text-3xl">
+          <h1 className="mt-3 text-balance text-[1.45rem] font-black tracking-tight text-foreground sm:text-3xl">
             {content.title}
           </h1>
 
-          <p className="mx-auto mt-1.5 max-w-[280px] text-pretty text-[12px] leading-5 text-foreground-muted sm:text-[13px] sm:leading-6">
+          <p className="mx-auto mt-1.5 max-w-[270px] text-pretty text-[12px] leading-5 text-foreground-muted sm:max-w-[280px] sm:text-[13px] sm:leading-6">
             {content.subtitle}
           </p>
         </motion.div>
@@ -152,17 +168,29 @@ export default function BirthdayLogin() {
               htmlFor="birthday"
               className="flex items-center gap-1.5 text-[11px] font-bold text-foreground sm:text-xs"
             >
-              <span className="text-primary">🗓</span>
+              <span className="text-primary">📅</span>
               {content.birthdayLabel}
             </label>
 
-            <input
-              id="birthday"
-              type="date"
-              value={birthday}
-              onChange={(event) => setBirthday(event.target.value)}
-              className="h-11 w-full rounded-2xl border border-border-soft bg-white/90 px-4 text-sm font-medium text-foreground outline-none ring-0 transition-all duration-300 focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-soft/25 sm:h-12"
-            />
+            <div className="relative">
+              <input
+                ref={birthdayInputRef}
+                id="birthday"
+                type="date"
+                value={birthday}
+                onChange={(event) => setBirthday(event.target.value)}
+                className="h-11 w-full appearance-none rounded-2xl border border-border-soft bg-white/90 px-4 pr-12 text-sm font-medium text-foreground outline-none ring-0 transition-all duration-300 focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-soft/25 sm:h-12"
+              />
+
+              <button
+                type="button"
+                onClick={openBirthdayPicker}
+                className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl bg-primary-soft/20 text-base text-primary-dark transition hover:bg-primary-soft/35 active:scale-95"
+                aria-label="Abrir calendario"
+              >
+                📅
+              </button>
+            </div>
           </div>
 
           <div className="space-y-1.5">
@@ -170,18 +198,28 @@ export default function BirthdayLogin() {
               htmlFor="password"
               className="flex items-center gap-1.5 text-[11px] font-bold text-foreground sm:text-xs"
             >
-              <span className="text-primary">🔑</span>
               {content.passwordLabel}
             </label>
 
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder={content.passwordPlaceholder}
-              className="h-11 w-full rounded-2xl border border-border-soft bg-white/90 px-4 text-sm font-medium text-foreground outline-none ring-0 transition-all duration-300 placeholder:text-foreground-muted/50 focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-soft/25 sm:h-12"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder={content.passwordPlaceholder}
+                className="h-11 w-full rounded-2xl border border-border-soft bg-white/90 px-4 pr-12 text-sm font-medium text-foreground outline-none ring-0 transition-all duration-300 placeholder:text-foreground-muted/50 focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-soft/25 sm:h-12"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl bg-primary-soft/20 text-base text-primary-dark transition hover:bg-primary-soft/35 active:scale-95"
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
 
           <div className="min-h-[2rem]">
@@ -231,7 +269,11 @@ export default function BirthdayLogin() {
                 <>
                   <motion.span
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                     className="inline-block"
                   >
                     ✨
@@ -252,7 +294,7 @@ export default function BirthdayLogin() {
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-soft/30 text-base">
             💌
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-primary-dark/80 sm:text-[10px]">
               Hecho solo para ti
             </p>

@@ -77,9 +77,7 @@ export default function BirthdayCountdown() {
   const { route, content } = birthdayCountdownData;
 
   useEffect(() => {
-    if (count === 0) {
-      setPhase("ready");
-
+    if (phase === "ready") {
       const redirectTimer = window.setTimeout(() => {
         router.replace(route);
       }, 1200);
@@ -88,27 +86,33 @@ export default function BirthdayCountdown() {
     }
 
     const timer = window.setTimeout(() => {
-      setCount((c) => c - 1);
+      if (count <= 1) {
+        setCount(0);
+        setPhase("ready");
+        return;
+      }
+
+      setCount((currentCount) => currentCount - 1);
     }, 1000);
 
     return () => window.clearTimeout(timer);
-  }, [count, route, router]);
+  }, [count, phase, route, router]);
 
-  const progress = ((10 - count) / 10) * 100;
+  const progress = phase === "ready" ? 100 : ((10 - count) / 10) * 100;
 
   return (
-    <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+    <div className="relative flex min-h-dvh w-full items-center justify-center overflow-hidden px-4 py-8">
       <BirthdayFireworks active />
 
-      <div className="pointer-events-none absolute inset-0 z-[1]">
-        <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-soft/20 blur-3xl" />
-        <div className="absolute -left-32 top-1/4 h-80 w-80 rounded-full bg-gold/25 blur-3xl" />
-        <div className="absolute -right-32 bottom-1/4 h-80 w-80 rounded-full bg-primary/15 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+        <div className="absolute left-1/2 top-1/2 h-[min(460px,90vw)] w-[min(460px,90vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-soft/20 blur-3xl" />
+        <div className="absolute -left-28 top-1/4 h-56 w-56 rounded-full bg-gold/25 blur-3xl sm:h-80 sm:w-80" />
+        <div className="absolute -right-28 bottom-1/4 h-56 w-56 rounded-full bg-primary/15 blur-3xl sm:h-80 sm:w-80" />
 
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute left-1/2 top-1/2 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-1/2 h-[min(440px,82vw)] w-[min(440px,82vw)] -translate-x-1/2 -translate-y-1/2"
           style={{ opacity: 0.07 }}
         >
           {[0, 60, 120, 180, 240, 300].map((deg) => (
@@ -128,10 +132,10 @@ export default function BirthdayCountdown() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 flex w-full max-w-sm flex-col items-center px-4 sm:max-w-md"
+        className="relative z-10 flex w-full max-w-[360px] flex-col items-center sm:max-w-md"
       >
-        <motion.div variants={itemVariants} className="mb-8 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary-soft/50 bg-white/60 px-5 py-2 backdrop-blur-sm">
+        <motion.div variants={itemVariants} className="mb-7 text-center sm:mb-8">
+          <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-primary-soft/50 bg-white/65 px-4 py-2 backdrop-blur-sm sm:px-5">
             <motion.span
               animate={{ rotate: [0, 15, -10, 0] }}
               transition={{
@@ -144,7 +148,7 @@ export default function BirthdayCountdown() {
               🎀
             </motion.span>
 
-            <span className="text-[10px] font-black uppercase tracking-[0.28em] text-primary-dark sm:text-[11px]">
+            <span className="text-[9px] font-black uppercase tracking-[0.24em] text-primary-dark sm:text-[11px] sm:tracking-[0.28em]">
               {content.badge}
             </span>
           </div>
@@ -152,19 +156,19 @@ export default function BirthdayCountdown() {
 
         <motion.div
           variants={itemVariants}
-          className="relative mb-10 flex items-center justify-center"
+          className="relative mb-9 flex items-center justify-center sm:mb-10"
         >
           <motion.div
             variants={orbitVariants}
             animate="animate"
-            className="absolute h-56 w-56 sm:h-64 sm:w-64"
+            className="absolute h-44 w-44 sm:h-56 sm:w-56 md:h-64 md:w-64"
           >
             {[0, 72, 144, 216, 288].map((deg, i) => (
               <motion.div
                 key={deg}
-                className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 text-lg"
+                className="absolute left-1/2 top-0 text-base sm:text-lg"
                 style={{
-                  transform: `rotate(${deg}deg) translateY(-112px) rotate(-${deg}deg)`,
+                  transform: `translateX(-50%) rotate(${deg}deg) translateY(clamp(-112px, -24vw, -88px)) rotate(-${deg}deg)`,
                 }}
                 animate={{
                   scale: [1, 1.3, 1],
@@ -185,14 +189,14 @@ export default function BirthdayCountdown() {
           <motion.div
             variants={orbitReverseVariants}
             animate="animate"
-            className="absolute h-36 w-36 sm:h-40 sm:w-40"
+            className="absolute h-32 w-32 sm:h-36 sm:w-36 md:h-40 md:w-40"
           >
             {[0, 90, 180, 270].map((deg, i) => (
               <motion.div
                 key={deg}
-                className="absolute left-1/2 top-0 -translate-x-1/2 text-xs"
+                className="absolute left-1/2 top-0 text-xs"
                 style={{
-                  transform: `rotate(${deg}deg) translateY(-68px) rotate(-${deg}deg)`,
+                  transform: `translateX(-50%) rotate(${deg}deg) translateY(clamp(-68px, -16vw, -54px)) rotate(-${deg}deg)`,
                 }}
                 animate={{ opacity: [0.3, 0.8, 0.3] }}
                 transition={{
@@ -202,12 +206,12 @@ export default function BirthdayCountdown() {
                   ease: "easeInOut",
                 }}
               >
-                {["·", "·", "·", "·"][i]}
+                ·
               </motion.div>
             ))}
           </motion.div>
 
-          <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-white/70 shadow-2xl shadow-primary/25 ring-1 ring-primary-soft/40 backdrop-blur-xl sm:h-36 sm:w-36">
+          <div className="relative flex h-30 w-30 items-center justify-center rounded-full bg-white/75 shadow-2xl shadow-primary/25 ring-1 ring-primary-soft/40 backdrop-blur-xl sm:h-36 sm:w-36">
             <div className="absolute inset-2 rounded-full bg-gradient-to-br from-primary-soft/30 via-transparent to-primary/20" />
 
             <AnimatePresence mode="wait">
@@ -253,13 +257,16 @@ export default function BirthdayCountdown() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.35 }}
-              className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary-dark/70 sm:text-xs"
+              className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary-dark/70 sm:text-xs sm:tracking-[0.22em]"
+              aria-live="polite"
             >
-              {phase === "ready" ? content.finalText : NUMBER_LABELS[count]}
+              {phase === "ready"
+                ? content.finalText
+                : NUMBER_LABELS[count] ?? content.finalText}
             </motion.p>
           </AnimatePresence>
 
-          <h1 className="mt-3 text-balance text-2xl font-black tracking-tight text-foreground sm:text-3xl">
+          <h1 className="mt-3 text-balance text-[1.65rem] font-black tracking-tight text-foreground sm:text-3xl">
             {content.title}
           </h1>
 
@@ -295,7 +302,7 @@ export default function BirthdayCountdown() {
                 animate={{
                   scale: count === 10 - dot + 1 ? [1, 1.4, 1] : 1,
                   backgroundColor:
-                    10 - dot + 1 >= count
+                    phase === "ready" || 10 - dot + 1 >= count
                       ? "rgb(232, 69, 124)"
                       : "rgba(232, 69, 124, 0.2)",
                 }}

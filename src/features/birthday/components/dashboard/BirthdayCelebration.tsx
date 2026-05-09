@@ -20,6 +20,12 @@ const confettiColors = [
   "#ffffff",
 ];
 
+const isSmallScreen = () => {
+  if (typeof window === "undefined") return false;
+
+  return window.innerWidth < 640;
+};
+
 export default function BirthdayCelebration({
   onFinish,
 }: BirthdayCelebrationProps) {
@@ -34,29 +40,31 @@ export default function BirthdayCelebration({
 
     if (!fire) return;
 
+    const mobile = isSmallScreen();
+
     fire({
-      particleCount: 120,
-      spread: 85,
-      startVelocity: 48,
-      scalar: 1.05,
+      particleCount: mobile ? 55 : 120,
+      spread: mobile ? 70 : 85,
+      startVelocity: mobile ? 34 : 48,
+      scalar: mobile ? 0.85 : 1.05,
       colors: confettiColors,
       origin: { x: 0.18, y: 0.52 },
     });
 
     fire({
-      particleCount: 120,
-      spread: 85,
-      startVelocity: 48,
-      scalar: 1.05,
+      particleCount: mobile ? 55 : 120,
+      spread: mobile ? 70 : 85,
+      startVelocity: mobile ? 34 : 48,
+      scalar: mobile ? 0.85 : 1.05,
       colors: confettiColors,
       origin: { x: 0.82, y: 0.52 },
     });
 
     fire({
-      particleCount: 170,
-      spread: 120,
-      startVelocity: 52,
-      scalar: 1.1,
+      particleCount: mobile ? 80 : 170,
+      spread: mobile ? 95 : 120,
+      startVelocity: mobile ? 38 : 52,
+      scalar: mobile ? 0.9 : 1.1,
       colors: confettiColors,
       origin: { x: 0.5, y: 0.42 },
     });
@@ -67,13 +75,15 @@ export default function BirthdayCelebration({
 
     if (!fire) return;
 
+    const mobile = isSmallScreen();
+
     fire({
-      particleCount: 180,
-      spread: 170,
-      startVelocity: 34,
+      particleCount: mobile ? 90 : 180,
+      spread: mobile ? 130 : 170,
+      startVelocity: mobile ? 24 : 34,
       gravity: 0.7,
-      ticks: 260,
-      scalar: 0.95,
+      ticks: mobile ? 210 : 260,
+      scalar: mobile ? 0.8 : 0.95,
       colors: confettiColors,
       origin: { x: 0.5, y: 0 },
     });
@@ -84,6 +94,7 @@ export default function BirthdayCelebration({
 
     confettiRef.current = confetti.create(canvasRef.current, {
       resize: true,
+      useWorker: true,
     });
 
     const cardTimer = window.setTimeout(() => {
@@ -132,7 +143,7 @@ export default function BirthdayCelebration({
 
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 z-20 h-full w-full"
+        className="absolute inset-0 z-20 block h-full w-full"
       />
 
       <AnimatePresence>
@@ -158,9 +169,9 @@ export default function BirthdayCelebration({
               duration: 0.4,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="absolute left-1/2 top-1/2 z-30 w-[calc(100%-2rem)] max-w-[280px] -translate-x-1/2 -translate-y-1/2"
+            className="absolute left-1/2 top-1/2 z-30 w-[calc(100%-2rem)] max-w-[300px] -translate-x-1/2 -translate-y-1/2 px-0 sm:max-w-[320px]"
           >
-            <div className="relative overflow-hidden rounded-2xl border border-pink-200/70 bg-white/95 px-5 py-4 text-center shadow-2xl shadow-pink-200/40 backdrop-blur-2xl">
+            <div className="relative overflow-hidden rounded-2xl border border-pink-200/70 bg-white/95 px-4 py-4 text-center shadow-2xl shadow-pink-200/40 backdrop-blur-2xl sm:px-5">
               <motion.div
                 initial={{
                   scale: 0,
@@ -233,7 +244,7 @@ export default function BirthdayCelebration({
                   delay: 0.35,
                   duration: 0.35,
                 }}
-                className="mt-1 text-[10px] font-semibold text-gray-400"
+                className="mt-1 text-[10px] font-semibold leading-4 text-gray-400"
               >
                 Ahora sí, que empiece lo bonito.
               </motion.p>

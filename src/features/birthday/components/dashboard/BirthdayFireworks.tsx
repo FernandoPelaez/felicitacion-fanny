@@ -1,78 +1,101 @@
 "use client";
 
-import { useEffect, useRef, type ComponentProps } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentProps } from "react";
 import { Fireworks, type FireworksHandlers } from "@fireworks-js/react";
 
 type BirthdayFireworksProps = {
   active?: boolean;
 };
 
-const fireworksOptions = {
-  autoresize: true,
-  opacity: 0.6,
+type FireworksOptions = ComponentProps<typeof Fireworks>["options"];
 
-  rocketsPoint: {
-    min: 15,
-    max: 85,
-  },
+function getFireworksOptions(isMobile: boolean): FireworksOptions {
+  return {
+    autoresize: true,
+    opacity: isMobile ? 0.42 : 0.6,
 
-  hue: {
-    min: 320,
-    max: 360,
-  },
-
-  delay: {
-    min: 20,
-    max: 40,
-  },
-
-  acceleration: 1.04,
-  friction: 0.97,
-  gravity: 1.1,
-
-  particles: 90,
-
-  traceLength: 3,
-  traceSpeed: 6,
-
-  explosion: 6,
-  intensity: 32,
-  flickering: 45,
-
-  lineWidth: {
-    explosion: {
-      min: 1.2,
-      max: 3,
+    rocketsPoint: {
+      min: isMobile ? 22 : 15,
+      max: isMobile ? 78 : 85,
     },
-    trace: {
-      min: 1,
-      max: 2,
+
+    hue: {
+      min: 320,
+      max: 360,
     },
-  },
 
-  lineStyle: "round",
+    delay: {
+      min: isMobile ? 34 : 20,
+      max: isMobile ? 64 : 40,
+    },
 
-  brightness: {
-    min: 60,
-    max: 90,
-  },
+    acceleration: 1.04,
+    friction: 0.97,
+    gravity: isMobile ? 1.18 : 1.1,
 
-  decay: {
-    min: 0.015,
-    max: 0.03,
-  },
+    particles: isMobile ? 42 : 90,
 
-  mouse: {
-    click: false,
-    move: false,
-    max: 0,
-  },
-} as unknown as ComponentProps<typeof Fireworks>["options"];
+    traceLength: isMobile ? 2 : 3,
+    traceSpeed: isMobile ? 4 : 6,
+
+    explosion: isMobile ? 4 : 6,
+    intensity: isMobile ? 16 : 32,
+    flickering: isMobile ? 32 : 45,
+
+    lineWidth: {
+      explosion: {
+        min: isMobile ? 0.8 : 1.2,
+        max: isMobile ? 2 : 3,
+      },
+      trace: {
+        min: 1,
+        max: isMobile ? 1.4 : 2,
+      },
+    },
+
+    lineStyle: "round",
+
+    brightness: {
+      min: 60,
+      max: 90,
+    },
+
+    decay: {
+      min: 0.015,
+      max: 0.03,
+    },
+
+    mouse: {
+      click: false,
+      move: false,
+      max: 0,
+    },
+  } as unknown as FireworksOptions;
+}
 
 export default function BirthdayFireworks({
   active = true,
 }: BirthdayFireworksProps) {
   const fireworksRef = useRef<FireworksHandlers>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateScreenSize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    updateScreenSize();
+
+    window.addEventListener("resize", updateScreenSize);
+
+    return () => {
+      window.removeEventListener("resize", updateScreenSize);
+    };
+  }, []);
+
+  const fireworksOptions = useMemo(() => {
+    return getFireworksOptions(isMobile);
+  }, [isMobile]);
 
   useEffect(() => {
     if (!active) {
@@ -85,10 +108,10 @@ export default function BirthdayFireworks({
     return () => {
       fireworksRef.current?.stop();
     };
-  }, [active]);
+  }, [active, fireworksOptions]);
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 z-0 max-w-full overflow-hidden">
       <Fireworks
         ref={fireworksRef}
         options={fireworksOptions}
@@ -97,6 +120,7 @@ export default function BirthdayFireworks({
           inset: 0,
           width: "100%",
           height: "100%",
+          maxWidth: "100%",
           pointerEvents: "none",
         }}
       />
