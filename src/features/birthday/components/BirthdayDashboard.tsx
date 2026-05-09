@@ -25,16 +25,16 @@ type DashboardOption = {
 
 const options: DashboardOption[] = [
   {
-    id: "carta",
-    icon: "💌",
-    label: "Carta",
-    description: "Palabras desde el corazón",
-  },
-  {
     id: "cancion",
     icon: "🎶",
     label: "Canción",
     description: "Una melodía especial",
+  },
+  {
+    id: "carta",
+    icon: "💌",
+    label: "Carta",
+    description: "Palabras desde el corazón",
   },
   {
     id: "recuerdos",
@@ -83,8 +83,8 @@ const panelVariants: Variants = {
 };
 
 export default function BirthdayDashboard() {
-  const [activeTab, setActiveTab] = useState<BirthdayDashboardTab>("carta");
-  const [showSongPlayer, setShowSongPlayer] = useState(false);
+  const [activeTab, setActiveTab] = useState<BirthdayDashboardTab>("cancion");
+  const [showSongPlayer, setShowSongPlayer] = useState(true);
 
   const activeOption = useMemo(
     () => options.find((option) => option.id === activeTab),
@@ -238,18 +238,7 @@ export default function BirthdayDashboard() {
           </div>
 
           <AnimatePresence mode="wait">
-            {activeTab === "carta" ? (
-              <motion.div
-                key="carta-panel"
-                variants={panelVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="min-w-0 w-full max-w-full overflow-hidden"
-              >
-                <BirthdayLetterPanel />
-              </motion.div>
-            ) : activeTab === "cancion" ? (
+            {activeTab === "cancion" ? (
               <motion.div
                 key="cancion-panel"
                 variants={panelVariants}
@@ -263,14 +252,14 @@ export default function BirthdayDashboard() {
 
                 <div className="relative min-w-0">
                   <h2 className="text-base font-black leading-snug tracking-tight text-gray-800 sm:text-lg">
-                    Esta canción me recordó a ti.
+                    Primero ponle play a esta canción.
                   </h2>
 
                   <p className="mt-1.5 max-w-2xl text-[11px] leading-5 text-gray-500 sm:text-xs">
-                    Esta canción habla de alguien que siente algo grande pero no
-                    sabe muy bien cómo decirlo. La elegí porque a veces hay
-                    cosas que se expresan mejor con música que con palabras.
-                    Espero te guste.
+                    La dejé arriba para que empiece acompañando todo este
+                    detalle. Dale reproducir y luego puedes ir viendo la carta,
+                    los momentos, la sorpresa y los deseos con la canción de
+                    fondo.
                   </p>
 
                   <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -280,17 +269,26 @@ export default function BirthdayDashboard() {
                       className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-pink-400 px-4 py-2 text-[11px] font-black text-white shadow-md shadow-pink-200/60 transition hover:scale-[1.01] active:scale-95 sm:w-auto"
                     >
                       {showSongPlayer
-                        ? "La canción ya está arriba 🎶"
+                        ? "La canción está lista arriba 🎶"
                         : "Mostrar canción arriba 🎶"}
                     </button>
 
                     <p className="text-[10px] font-semibold text-gray-400">
-                      {showSongPlayer
-                        ? "Ahora solo dale reproducir en el reproductor."
-                        : "Al presionar, aparecerá el reproductor arriba."}
+                      El navegador puede pedir que toques play manualmente.
                     </p>
                   </div>
                 </div>
+              </motion.div>
+            ) : activeTab === "carta" ? (
+              <motion.div
+                key="carta-panel"
+                variants={panelVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="min-w-0 w-full max-w-full overflow-hidden"
+              >
+                <BirthdayLetterPanel />
               </motion.div>
             ) : activeTab === "recuerdos" ? (
               <motion.div
